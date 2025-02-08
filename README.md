@@ -160,8 +160,58 @@ Langkah penyelesaian projek
     ALTER TABLE return_status ALTER COLUMN return_book_isbn VARCHAR(100)
 
    ```
-7. SHSH
-8. SSJS
-9. SHSGS
-10. SGHSGS
-11. 
+7. Operasi CRUD (Create, Read, Update, Delete)
+   
+   ```sql
+   -- Task 1. Create a New Book Record 
+   -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
+   
+   INSERT INTO books VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')
+   
+   --
+   --Task 2: Update an Existing Member's Address
+   
+   UPDATE members
+   SET member_address = '125 Oak St'
+   WHERE member_id = 'C103';
+   
+   --
+   --Task 3: Delete a Record from the Issued Status Table 
+   -- Objective: Delete the record with issued_id = 'IS121' from the issued_status table.
+   
+   DELETE FROM issued_status
+   WHERE   issued_id =   'IS121';
+   
+   --
+   --Task 4: Retrieve All Books Issued by a Specific Employee 
+   -- Objective: Select all books issued by the employee with emp_id = 'E101'.
+   
+   SELECT * FROM issued_status
+   WHERE issued_emp_id = 'E101'
+   
+   --
+   --Task 5: List Members Who Have Issued More Than One Book 
+   -- Objective: Use GROUP BY to find members who have issued more than one book.
+   
+   SELECT
+       issued_emp_id,
+       COUNT(*)
+   FROM issued_status
+   GROUP BY issued_emp_id
+   HAVING COUNT(*) > 1;
+   
+   --
+   --CTAS (Create Table As Select)
+   
+   CREATE TABLE book_issued_cnt AS
+   SELECT b.isbn, b.book_title, COUNT(ist.issued_id) AS issue_count
+   FROM issued_status as ist
+   JOIN books as b
+   ON ist.issued_book_isbn = b.isbn
+   GROUP BY b.isbn, b.book_title;
+
+   ```
+9. SSJS
+10. SHSGS
+11. SGHSGS
+12. 

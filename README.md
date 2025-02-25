@@ -236,4 +236,16 @@ Result : Ditampilkan data jumlah income perkategori buku
 
 ![data analysis-2](https://github.com/user-attachments/assets/59f78752-4671-4f2d-88cb-bf4a87f2a15b)
 
+**List Members Who Registered in The Last 1000 Days**
+```sql
+SELECT * 
+FROM members
+WHERE reg_date >= DATEADD(DAY, -1000, CAST(GETDATE() AS DATE));
+``` 
+Digunakan DATEADD untuk melakukan operasi terhadap DATE. Disini dilakukan operasi pengurangan DATE hari ini (diperoleh dengan GETDATE) dengan DAY sejumlah 1000 hari.
+**Result:** Ditampilkan data members yang regis di 1000 hari terakhir.
+
+![image](https://github.com/user-attachments/assets/04e81062-33da-4b8a-93ad-2d5de5abad9d)
+
+
 

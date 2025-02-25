@@ -214,7 +214,7 @@ Langkah penyelesaian projek
 SELECT * FROM books
 WHERE category = 'Classic'
 ```
-Result : Ditampilkan tabel data buku dengan kategori 'Classic'.
+**Result :** Ditampilkan tabel data buku dengan kategori 'Classic'.
 
 ![image](https://github.com/user-attachments/assets/f04d0fcb-cd7f-49a4-8e1d-42885e5f6894)
 
@@ -232,11 +232,11 @@ Result : Ditampilkan tabel data buku dengan kategori 'Classic'.
    FROM rental_tb
    GROUP BY category
    ```
-Result : Ditampilkan data jumlah income perkategori buku
+**Result :** Ditampilkan data jumlah income perkategori buku
 
 ![data analysis-2](https://github.com/user-attachments/assets/59f78752-4671-4f2d-88cb-bf4a87f2a15b)
 
-**List Members Who Registered in The Last 1000 Days**
+**2. List Members Who Registered in The Last 1000 Days**
 ```sql
 SELECT * 
 FROM members
@@ -246,6 +246,30 @@ Digunakan DATEADD untuk melakukan operasi terhadap DATE. Disini dilakukan operas
 **Result:** Ditampilkan data members yang regis di 1000 hari terakhir.
 
 ![image](https://github.com/user-attachments/assets/04e81062-33da-4b8a-93ad-2d5de5abad9d)
+
+**3. List Employees with Their Branch Manager's Name and Their Branch Details**
+```sql
+SELECT e1.emp_name, e1.position, e1.salary, branch.branch_id, branch.branch_address, branch.manager_id, e2.emp_name as manager
+FROM employees as e1
+INNER JOIN branch ON branch.branch_id = e1.branch_id
+INNER JOIN employees as e2 ON branch.manager_id = e2.emp_id
+```
+**Result :** Ditampilkan data karyawan dengan detail branch tempat bekerja tiap karyawan.
+
+![image](https://github.com/user-attachments/assets/96e36d7f-f333-4b36-9255-3e4b75f57425)
+
+**4. Retrieve the List of Books Not Yet Returned**
+```SQL
+SELECT * 
+FROM issued_status as ist
+LEFT JOIN return_status rt ON ist.issued_id = rt.issued_id
+WHERE rt.issued_id IS NULL;
+```
+**Result :** ditampilkan data buku yang belum dikembalikan
+
+![image](https://github.com/user-attachments/assets/3f2fdf13-eabd-4db0-95ef-6dd22d1f87dd)
+
+
 
 
 

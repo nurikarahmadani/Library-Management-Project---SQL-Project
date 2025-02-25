@@ -269,6 +269,58 @@ WHERE rt.issued_id IS NULL;
 
 ![image](https://github.com/user-attachments/assets/3f2fdf13-eabd-4db0-95ef-6dd22d1f87dd)
 
+**5. Menampilkan Data Members dan Data Peminjaman yang Terlambat Mengembalikan Buku**
+Catatan : buku wajib dikembalikan dalam 30 hari setelah dipinjam
+```sql
+SELECT 
+	m.member_id, 
+	m.member_name, 
+	ist.issued_id, 
+	ist.issued_book_name, 
+	ist.issued_date,
+	DATEDIFF(DAY, DATEADD(DAY, 30, ist.issued_date), GETDATE()) AS late_days
+FROM issued_status AS ist
+INNER JOIN members AS m ON m.member_id = ist.issued_member_id
+WHERE DATEADD(DAY, 30, ist.issued_date) < GETDATE()
+```
+**Result :** ditampilkan data members dan issued_status (status pengembalian)
+
+![image](https://github.com/user-attachments/assets/c5971e2a-4a18-4179-8d2c-ebe29470ba75)
+
+**6. Membuat Branch Performance Report**
+Create a query that generates a performance report for each branch, showing the number of books issued, 
+the number of books returned, and the total revenue generated from book rentals.
+```sql
+WITH report AS(
+	SELECT 
+		br.branch_id,
+		emp.emp_name,
+		ist.issued_id,
+		rtn.return_id,
+		b.rental_price
+	FROM branch AS br
+	INNER JOIN employees AS emp ON br.branch_id = emp.branch_id
+	INNER JOIN issued_status AS ist ON ist.issued_emp_id = emp.emp_id
+	LEFT JOIN return_status AS rtn ON rtn.issued_id = ist.issued_id
+	INNER JOIN books AS b ON b.isbn = ist.issued_book_isbn
+
+)
+SELECT 
+	branch_id,
+	COUNT(issued_id) AS issued_total,
+	COUNT(return_id) AS return_total,
+	SUM(rental_price) AS revenue_total
+FROM report
+GROUP BY branch_id
+```
+
+**Result :** ditampilkan data report total peminjaman, total pengembalian, dan total pendapatan untuk tiap branch
+
+![image](https://github.com/user-attachments/assets/0ee0fc80-6949-40af-ba62-0134cff4803d)
+
+
+
+
 
 
 

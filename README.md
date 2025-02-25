@@ -249,3 +249,5 @@ Digunakan DATEADD untuk melakukan operasi terhadap DATE. Disini dilakukan operas
 
 
 
+
+

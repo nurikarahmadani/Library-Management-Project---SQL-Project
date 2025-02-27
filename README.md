@@ -1,5 +1,7 @@
 # Library-Management-Project---SQL-Project
 
+Source : https://github.com/najirh/Library-System-Management---P2
+
 Langkah penyelesaian projek
 1. Membangun database.
 2. Melakukan operasi CRUD.
